@@ -12,32 +12,36 @@ void draw(){
 }
 
 void keyPressed() {
+  
+  Input in;
   switch(key){
     case 'a':
-      sc.addAction( GO_LEFT, 1 );
+      in = new Input( Input.GO_LEFT, 1 );
       break;
     case 'w':
-      sc.addAction( GO_UP, 1 );
+      in = new Input( Input.GO_UP, 1 );
       break;
     case 'd':
-      sc.addAction( GO_RIGHT, 1 );
+      in = new Input( Input.GO_RIGHT, 1 );
       break;
     case 's':
-      sc.addAction( GO_DOWN, 1 );
+      in = new Input( Input.GO_DOWN, 1 );
       break; 
   }  
   switch(keyCode){
     case 'UP':
-      sc.addAction( GO_UP, 1 );
+      in = new Input( Input.GO_UP, 2 );
       break;
     case 'DOWN':
-      sc.addAction( GO_DOWN, 1 );
+      in = new Input( Input.GO_DOWN, 2 );
       break;
     case 'RIGHT':
-      sc.addAction( GO_RIGHT, 1 );
+      in = new Input( Input.GO_RIGHT, 2 );
       break;
     case 'LEFT':
-      sc.addAction( GO_LEFT, 1 );
+      in = new Input( Input.GO_LEFT, 2 );
       break;
   }
+  
+  sc.addInput( in );
 }
