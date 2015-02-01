@@ -4,7 +4,12 @@
 
 class SnakeCore {
   
-  int  gameState;  // not started yet / playing / game over
+  enum GameState{
+    NOT_STARTED_YET, PLAYING, GAME_OVER
+  }
+  GameState  gameState;
+  
+  
   
   int  numPlayers;
   PVector fieldSize;
@@ -23,29 +28,30 @@ class SnakeCore {
   
   // update the game data after time goes by
   void update(){
-    // handle real-time events
-    // 1. handle all the actions, dispose redundant actions
-    //    handle the actions that should take effect immediately
-    //    such as jump up / pause the game etc.  
+    // handle real-time events like:
+    // Snake jump (?)
+    // game paused
 
     // handle position-triggered events
-    // 2. if the snakes have reach new blocks, make actions
-    //     which is the last move take effect.
-    
-    // 3. at the same time as 2.,
-    //    check if foods were eaten ( overlap with a snake )
-    //    extend the length or apply some effect on snakes
-    //    ( flying / stronger / accelerated etc. ) 
-    
-    // 4. check if snakes are dead 
+    // food eatten
+    // snake collision 
   }
   
   // draw the game scene
   void drawInProcessing(){
-    // background
-    // snake
-    // food
-    // effect
+    switch( gameState ){
+      case NOT_STARTED_YET:
+        break;
+      case PLAYING:
+        // background
+        // snake
+        // food
+        // effect
+        break;
+      case GAME_OVER:
+        break;
+      default:
+    }
   }
   
   // add key events or camera events via this function
