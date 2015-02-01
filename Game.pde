@@ -1,14 +1,13 @@
+
+
 class Game {
   HashMap<String, Scene> scenes;
   Scene toPlay;
   
-  void loop() {
-    toPlay.loop();
-  }
-  
-  void interrupt( Input in ){
-    toPlay.interrupt( in );
-  }
+  void switchScene( String sceneName ){ toPlay = scenes.get( sceneName ); }
+  void switchScene( Scene scene )  { toPlay = scene; }
+  void loop() { toPlay.loop(); }
+  void interrupt( Input in ){ toPlay.interrupt( in ); }
 }
 
 class Scene {
@@ -18,9 +17,9 @@ class Scene {
   void loop() {}
   void interrupt( Input in ){}
   
-  void transScene( String nextSceneName )
-  { game.toPlay = game.scenes.get( nextSceneName ); }
+  void switchScene( String sceneName )
+  { game.switchScene( sceneName ); }
 
-  void transScene( Scene nextScene )
-  { game.toPlay = nextScene; }
+  void switchScene( Scene nextScene )
+  { game.switchScene( nextScene ); }
 }

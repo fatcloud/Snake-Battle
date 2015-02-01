@@ -1,9 +1,10 @@
 class SnakeGame extends Game { 
   SnakeGame(){
+    scenes = new HashMap<String, Scene>();
     scenes.put( "start", new SnakeStartScene( this ) );
-    scenes.put( "play" , new SnakePlayScene( this )  );
+    scenes.put( "play" , new SnakePlayScene(  this ) );
     scenes.put( "pause", new SnakePauseScene( this ) );
-    scenes.put( "end"  , new SnakeEndScene( this )   );
+    scenes.put( "end"  , new SnakeEndScene(   this ) );
     toPlay = scenes.get("start"); 
   }
   
@@ -44,18 +45,18 @@ class SnakeGame extends Game {
 }
 
 class SnakeStartScene extends Scene {
-  //SnakeStartScene( Game g ){ game = g; }
-  void loop() { transScene( "play" ); }
+  SnakeStartScene( Game g ){ super( g ); }
+  void loop() { switchScene( "play" ); }
 }
 
 class SnakePlayScene extends Scene {
-  
+  SnakePlayScene( Game g ){ super( g ); }
 }
 
 class SnakePauseScene extends Scene {
-  
+  SnakePauseScene( Game g ){ super( g ); }
 }
 
 class SnakeEndScene extends Scene {
-  
+  SnakeEndScene( Game g ){ super( g ); }
 }
