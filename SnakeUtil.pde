@@ -5,7 +5,7 @@ class Snake{
   Snake(){
     int initlength = 3;
     for( int i = 0; i < initlength; ++i ){
-      bodyParts.
+      //bodyParts.
     }
   }
 }
@@ -19,19 +19,24 @@ class SnakeBody extends PVector{
   
 }
 
+
+
 class Input{
-  public:
-    enum command{
-      GO_LEFT, GO_RIGHT, GO_UP, GO_DOWN, JUMP,
-      GAME_START, GAME_PAUSE, GAME_CONTINUE
-    }
+    public static final int GO_LEFT = 0,
+                     GO_RIGHT       = 1,
+                     GO_UP          = 2,
+                     GO_DOWN        = 3,
+                     JUMP           = 4,
+                     GAME_START     = 5,
+                     GAME_PAUSE     = 6,
+                     GAME_CONTINUE  = 7;
     
-    command cmd;
-    int     player;
-  
-    Input( command c, int p ){
-      cmd = c;
-      player = p;
+    int  command;    
+    int  player;
+
+    Input( int c, int p ){
+      command = c;
+      player  = p;
     }
   
 

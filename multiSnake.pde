@@ -13,7 +13,7 @@ void draw(){
 
 void keyPressed() {
   
-  Input in;
+  Input in = null;
   switch(key){
     case 'a':
       in = new Input( Input.GO_LEFT, 1 );
@@ -29,19 +29,19 @@ void keyPressed() {
       break; 
   }  
   switch(keyCode){
-    case 'UP':
+    case UP:
       in = new Input( Input.GO_UP, 2 );
       break;
-    case 'DOWN':
+    case DOWN:
       in = new Input( Input.GO_DOWN, 2 );
       break;
-    case 'RIGHT':
+    case RIGHT:
       in = new Input( Input.GO_RIGHT, 2 );
       break;
-    case 'LEFT':
+    case LEFT:
       in = new Input( Input.GO_LEFT, 2 );
       break;
   }
-  
-  sc.addInput( in );
+  if( in != null )
+    sc.addInput( in );
 }

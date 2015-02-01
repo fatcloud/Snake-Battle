@@ -4,10 +4,10 @@
 
 class SnakeCore {
   
-  enum GameState{
-    NOT_STARTED_YET, PLAYING, GAME_OVER
-  }
-  GameState  gameState;
+  public static final int
+    NOT_STARTED_YET = 0, PLAYING = 1, GAME_OVER = 2;
+  
+  int  gameState;
   
   
   
@@ -62,7 +62,7 @@ class SnakeCore {
   
   // add key events or camera events via this function
   void addInput( Input in ){
-    Inputs.add( in );
+    inputs.add( in );
   }
   
 };
