@@ -5,16 +5,17 @@
 class SnakeCore {
   
   public static final int
-    NOT_STARTED_YET = 0, PLAYING = 1, GAME_OVER = 2;
+    GAME_INIT       = 0,
+    GAME_PLAYING    = 1,
+    GAME_PAUSED     = 2,
+    GAME_OVER       = 3;
   
-  int  gameState;
-  
-  
+  int      gameState;
   
   int      numPlayers;
   PVector  fieldSize;
   
-  ArrayList<Input>  inputs;
+  ArrayList<Input>   inputs;
   
   ArrayList<Snake>   snakes;
   ArrayList<Food>    Foods;
@@ -31,35 +32,22 @@ class SnakeCore {
   // update the game data after time goes by
   void update(){
     
-    // handle real-time events like:
-    // Snake jump (?)
-    // game paused
-
-    // handle position-triggered events
-    // food eatten
-    // snake collision 
-  }
+    if( gameState == GAME_PLAYING ) {
+      // handle real-time events like:
+      // Snake jump (?)
+      // game paused
   
-  // draw the game scene
-  void drawInProcessing(){
-    switch( gameState ){
-      case NOT_STARTED_YET:
-        background(0);
-        textSize(40);
-        
-        break;
-      case PLAYING:
-        // background
-        // snake
-        // food
-        // effect
-        break;
-      case GAME_OVER:
-        break;
-      default:
+      // handle position-triggered events
+      // food eatten
+      // snake collision 
     }
+    
   }
   
+  void setupInProcessing(  ) {
+    
+  }
+    
   // add key events or camera events via this function
   void addInput( Input in ){
     inputs.add( in );
