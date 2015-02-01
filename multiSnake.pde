@@ -15,7 +15,7 @@ void keyPressed() {
   
   switch(key){
     case 'a':
-      println("a");
+      sc.addAction( GO_LEFT, 1 );
       break;
     case 'w':
       println("w");
