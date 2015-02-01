@@ -12,32 +12,32 @@ void draw(){
 }
 
 void keyPressed() {
-  
   switch(key){
     case 'a':
       sc.addAction( GO_LEFT, 1 );
       break;
     case 'w':
-      println("w");
+      sc.addAction( GO_UP, 1 );
       break;
     case 'd':
-      println("d");
+      sc.addAction( GO_RIGHT, 1 );
       break;
     case 's':
-      println("s");
-      break;
-    case 'UP':
-      println("UP");
-      break;
-    case 'DOWN':
-      println("DOWN");
-      break;
-    case 'RIGHT':
-      println("RIGHT");
-      break;
-    case 'LEFT':
-      println("LEFT");
+      sc.addAction( GO_DOWN, 1 );
       break; 
   }  
+  switch(keyCode){
+    case 'UP':
+      sc.addAction( GO_UP, 1 );
+      break;
+    case 'DOWN':
+      sc.addAction( GO_DOWN, 1 );
+      break;
+    case 'RIGHT':
+      sc.addAction( GO_RIGHT, 1 );
+      break;
+    case 'LEFT':
+      sc.addAction( GO_LEFT, 1 );
+      break;
   }
 }
