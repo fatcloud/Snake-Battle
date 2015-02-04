@@ -2,12 +2,14 @@
 SnakeGame  sg;
 
 void setup(){
+  size(800,600);
   sg = new SnakeGame();
 }
 
 
 void draw(){
-  sg.loop();
+  sg.update();
+  sg.render();
 }
 
 void keyPressed() {

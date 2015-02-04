@@ -6,16 +6,18 @@ class Game {
   
   void switchScene( String sceneName ){ toPlay = scenes.get( sceneName ); }
   void switchScene( Scene scene )  { toPlay = scene; }
-  void loop() { toPlay.loop(); }
+  void update() { toPlay.update(); }
+  void render() { toPlay.render(); }
   void interrupt( Input in ){ toPlay.interrupt( in ); }
 }
 
-class Scene {
+abstract class Scene {
   Game game;
   
   Scene( Game g ){ game = g; }
-  void loop() {}
-  void interrupt( Input in ){}
+  abstract void update();
+  abstract void interrupt( Input in );
+  abstract void render();
   
   void switchScene( String sceneName )
   { game.switchScene( sceneName ); }

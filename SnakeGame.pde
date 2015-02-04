@@ -22,7 +22,11 @@ class SnakeGame extends Game {
         break;
       case 's':
         in = new Input( Input.GO_DOWN, 1 );
-        break; 
+        break;
+      case ' ':
+        in = new Input( Input.GAME_START, 0 );
+        break;
+      
     }  
     switch(keyCode){
       case UP:
@@ -39,24 +43,53 @@ class SnakeGame extends Game {
         break;
     }
     if( in != null )
-      sg.interrupt( in );
+      interrupt( in );
   
   }
 }
 
 class SnakeStartScene extends Scene {
   SnakeStartScene( Game g ){ super( g ); }
-  void loop() { switchScene( "play" ); }
+  void update() { 
+    //println("Start");
+  }
+  void render() {
+    background(0);
+    fill(255);
+    textSize(32);
+    text("Press <SPACE> to start",width/2,height/2);
+  }
+  void interrupt( Input in ){
+    if(in.command == Input.GAME_START )
+      switchScene( "play" );
+  }
 }
 
 class SnakePlayScene extends Scene {
   SnakePlayScene( Game g ){ super( g ); }
+  
+  void update() { println( "play" ); }
+  void render() {
+    background(0);
+  }
+  
+  void interrupt( Input in ){}
 }
 
 class SnakePauseScene extends Scene {
   SnakePauseScene( Game g ){ super( g ); }
+  
+  void update() { println( "pause" ); }
+  void render() {}
+  
+  void interrupt( Input in ){}
 }
 
 class SnakeEndScene extends Scene {
   SnakeEndScene( Game g ){ super( g ); }
+ 
+  void update() { println( "end" ); }
+  void render() {}
+  
+  void interrupt( Input in ){} 
 }
