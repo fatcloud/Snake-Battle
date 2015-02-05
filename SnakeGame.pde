@@ -12,34 +12,34 @@ class SnakeGame extends Game {
     Input in = null;
     switch(key){
       case 'a':
-        in = new Input( Input.GO_LEFT, 1 );
+        in = new Input( Input.GO_LEFT, 0 );
         break;
       case 'w':
-        in = new Input( Input.GO_UP, 1 );
+        in = new Input( Input.GO_UP, 0 );
         break;
       case 'd':
-        in = new Input( Input.GO_RIGHT, 1 );
+        in = new Input( Input.GO_RIGHT, 0 );
         break;
       case 's':
-        in = new Input( Input.GO_DOWN, 1 );
+        in = new Input( Input.GO_DOWN, 0 );
         break;
       case ' ':
-        in = new Input( Input.GAME_START, 0 );
+        in = new Input( Input.GAME_START, -1 );
         break;
       
     }  
     switch(keyCode){
       case UP:
-        in = new Input( Input.GO_UP, 2 );
+        in = new Input( Input.GO_UP, 1 );
         break;
       case DOWN:
-        in = new Input( Input.GO_DOWN, 2 );
+        in = new Input( Input.GO_DOWN, 1 );
         break;
       case RIGHT:
-        in = new Input( Input.GO_RIGHT, 2 );
+        in = new Input( Input.GO_RIGHT, 1 );
         break;
       case LEFT:
-        in = new Input( Input.GO_LEFT, 2 );
+        in = new Input( Input.GO_LEFT, 1 );
         break;
     }
     if( in != null )
@@ -90,14 +90,11 @@ class SnakePlayScene extends Scene {
   
   void render() {
     background(0);
-    // draw the layout of snake game
+    sc.render();
   }
   
   void interrupt( Input in ){
-    // change controllable states (ex. direction)
-    // immediately
-    
-    
+    sc.interrupt( in );
   }
 }
 

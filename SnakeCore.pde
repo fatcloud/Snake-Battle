@@ -5,18 +5,30 @@
 class SnakeCore {
   
   int      gameState;
-  
+  int      gridSize = 10;
   int      numPlayers;
   PVector  fieldSize;
   
   ArrayList<Snake>   snakes;
-  ArrayList<Food>    Foods;
+  ArrayList<Food>    foods;
   
   // initialize the position of snakes and foods
   SnakeCore(){
+    fieldSize = new PVector( 80, 60 );
+    snakes    = new ArrayList<Snake>();
+    snakes.add( new Snake(5,5,1) );
     // initialize game state such as score (?)
     // initialize the snakes
     // initialize foods
+  }
+  
+  void render() {
+    for ( Snake s : snakes )
+      s.render( gridSize );
+    
+    //for ( Food f : foods )
+    //  f.render( gridSize );
+    
   }
   
   void setField( int x, int y ) {
@@ -42,7 +54,7 @@ class SnakeCore {
   void update(){
     // 1. move everything according to the position
     for( Snake s : snakes )
-      s.updatePosition();
+      s.updatePosition( fieldSize );
     
     
     /*
@@ -64,4 +76,11 @@ class SnakeCore {
     */
     
   }
+  
+  
+  void interrupt( Input in ){
+    Snake s = snakes.get( in.getPlayer() );
+    s.setDirection( in.getCommand() );
+  }
+  
 };
