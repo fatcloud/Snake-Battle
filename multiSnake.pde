@@ -14,4 +14,6 @@ void draw(){
 
 void keyPressed() {
   sg.handleKey( key, keyCode );
+  println( "key = " + key  );
+  println( "keyCode = " + keyCode  );
 }

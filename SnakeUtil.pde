@@ -1,13 +1,50 @@
+interface Visible {
+  void render();  
+}
 
-class Snake{
-  ArrayList<SnakeBody> bodyParts;
+
+class Snake implements Visible {
   
-  Snake(){
-    int initlength = 3;
-    for( int i = 0; i < initlength; ++i ){
+  ArrayList<SnakeBody> bodyParts;
+
+  int     speed;
+  boolean alive;
+  color   col;
+  int     state;  
+  
+  Snake( int x, int y, int l ){
+    int initLength = l;
+    SnakeBody head = new SnakeBody(x,y);
+    bodyParts = new ArrayList<SnakeBody>();
+    
+    bodyParts.add( head );
+    for( int i = 0; i < initLength; ++i ){
       //bodyParts.
     }
   }
+  
+  
+  void updatePosition(){
+    
+  }
+  
+  
+  boolean onSnake( PVector pos ){
+    for( SnakeBody sb : bodyParts )
+      if( sb.x == pos.x && sb.y == pos.y )
+        return true;
+    
+    return false;
+  }
+  
+  
+  void render(){
+    for( SnakeBody b : bodyParts ){
+      fill(255);
+      ellipse(b.x, b.y,100,100);
+    }
+  }
+  
 }
 
 class Food extends PVector{
@@ -16,7 +53,9 @@ class Food extends PVector{
 
 
 class SnakeBody extends PVector{
-  
+  SnakeBody(float x, float y){
+    super(x,y);
+  }
 }
 
 

@@ -4,23 +4,13 @@
 
 class SnakeCore {
   
-  public static final int
-    GAME_INIT       = 0,
-    GAME_PLAYING    = 1,
-    GAME_PAUSED     = 2,
-    GAME_OVER       = 3;
-  
   int      gameState;
   
   int      numPlayers;
   PVector  fieldSize;
   
-  ArrayList<Input>   inputs;
-  
   ArrayList<Snake>   snakes;
   ArrayList<Food>    Foods;
-
-  void gameStart(){}
   
   // initialize the position of snakes and foods
   SnakeCore(){
@@ -29,28 +19,49 @@ class SnakeCore {
     // initialize foods
   }
   
-  // update the game data after time goes by
+  void setField( int x, int y ) {
+    fieldSize.set( x, y );
+  }
+  
+  void setPlayersNum( int n ) {
+    numPlayers = n;
+  }
+  
+  
+  
+  boolean onASnake( PVector pos ){
+    for( Snake s : snakes ){
+      if( s.onSnake( pos ) ){
+        return true;
+      }
+    }  
+    return false;
+  }
+  
+  
   void update(){
+    // 1. move everything according to the position
+    for( Snake s : snakes )
+      s.updatePosition();
     
-    if( gameState == GAME_PLAYING ) {
-      // handle real-time events like:
-      // Snake jump (?)
-      // game paused
-  
-      // handle position-triggered events
-      // food eatten
-      // snake collision 
+    
+    /*
+    // 2. determine if foods are eatten/ if there is any collision
+    for( Food f : Foods ) {
+      for( Snake s : snakes ) {
+        if( s.headPosition() == f.position() ) {
+          s.eat( f );
+          PVector pos = f.get();
+          while( onASnake( pos ) ){
+            pos = random2D();
+            pos.x = floor( pos.x * ( fieldSize.x + 1 ) );
+            pos.y = floor( pos.y * ( fieldSize.y + 1 ) );
+          }
+          food.setPosition( pos );
+        }
+      }
     }
+    */
     
   }
-  
-  void setupInProcessing(  ) {
-    
-  }
-    
-  // add key events or camera events via this function
-  void addInput( Input in ){
-    inputs.add( in );
-  }
-  
 };

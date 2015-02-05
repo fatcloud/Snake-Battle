@@ -48,6 +48,10 @@ class SnakeGame extends Game {
   }
 }
 
+
+
+
+
 class SnakeStartScene extends Scene {
   SnakeStartScene( Game g ){ super( g ); }
   void update() { 
@@ -65,16 +69,46 @@ class SnakeStartScene extends Scene {
   }
 }
 
+
+
+
+
+
+
 class SnakePlayScene extends Scene {
-  SnakePlayScene( Game g ){ super( g ); }
   
-  void update() { println( "play" ); }
-  void render() {
-    background(0);
+  SnakeCore sc;
+  
+  SnakePlayScene( Game g ){
+    super( g );
+    sc = new SnakeCore();
+    sc.setField( 80, 50 );
+    sc.setPlayersNum(2);
   }
   
-  void interrupt( Input in ){}
+  void update() { sc.update(); }
+  
+  void render() {
+    background(0);
+    // draw the layout of snake game
+  }
+  
+  void interrupt( Input in ){
+    // change controllable states (ex. direction)
+    // immediately
+    
+    
+  }
 }
+
+
+
+
+
+
+
+
+
 
 class SnakePauseScene extends Scene {
   SnakePauseScene( Game g ){ super( g ); }
@@ -84,6 +118,14 @@ class SnakePauseScene extends Scene {
   
   void interrupt( Input in ){}
 }
+
+
+
+
+
+
+
+
 
 class SnakeEndScene extends Scene {
   SnakeEndScene( Game g ){ super( g ); }
