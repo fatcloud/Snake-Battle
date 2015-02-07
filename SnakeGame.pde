@@ -57,14 +57,16 @@ class SnakeStartScene extends Scene {
   void update() { 
     //println("Start");
   }
+  
   void render() {
     background(0);
     fill(255);
     textSize(32);
     text("Press <SPACE> to start",width/2,height/2);
   }
-  void interrupt( Input in ){
-    if(in.command == Input.GAME_START )
+  
+  void interrupt( Input in ){ 
+    if(in.getCommand() == Input.GAME_START )
       switchScene( "play" );
   }
 }
