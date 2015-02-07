@@ -110,7 +110,7 @@ class SnakeBody extends PVector{
 
 
 
-class Input{
+class Signal{
     public static final int
       GO_LEFT        = 0,
       GO_RIGHT       = 1,
@@ -124,7 +124,7 @@ class Input{
     int  command;    
     int  player;
 
-    Input( int c, int p ) {
+    Signal( int c, int p ) {
       command = c;
       player  = p;
     }

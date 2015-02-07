@@ -8,44 +8,6 @@ class SnakeGame extends Game {
     toPlay = scenes.get("start"); 
   }
   
-  void handleKey( char key, int keyCode ) {
-    Input in = null;
-    switch(key){
-      case 'a':
-        in = new Input( Input.GO_LEFT, 0 );
-        break;
-      case 'w':
-        in = new Input( Input.GO_UP, 0 );
-        break;
-      case 'd':
-        in = new Input( Input.GO_RIGHT, 0 );
-        break;
-      case 's':
-        in = new Input( Input.GO_DOWN, 0 );
-        break;
-      case ' ':
-        in = new Input( Input.GAME_START, -1 );
-        break;
-      
-    }  
-    switch(keyCode){
-      case UP:
-        in = new Input( Input.GO_UP, 1 );
-        break;
-      case DOWN:
-        in = new Input( Input.GO_DOWN, 1 );
-        break;
-      case RIGHT:
-        in = new Input( Input.GO_RIGHT, 1 );
-        break;
-      case LEFT:
-        in = new Input( Input.GO_LEFT, 1 );
-        break;
-    }
-    if( in != null )
-      interrupt( in );
-  
-  }
 }
 
 
@@ -65,8 +27,8 @@ class SnakeStartScene extends Scene {
     text("Press <SPACE> to start",width/2,height/2);
   }
   
-  void interrupt( Input in ){ 
-    if(in.getCommand() == Input.GAME_START )
+  void interrupt( Signal sig ){ 
+    if(sig.getCommand() == Signal.GAME_START )
       switchScene( "play" );
   }
 }
@@ -84,7 +46,7 @@ class SnakePlayScene extends Scene {
   SnakePlayScene( Game g ){
     super( g );
     sc = new SnakeCore();
-    sc.setField( 80, 50 );
+    sc.setField( 79, 59 );
     sc.setPlayersNum(2);
   }
   
@@ -95,8 +57,8 @@ class SnakePlayScene extends Scene {
     sc.render();
   }
   
-  void interrupt( Input in ){
-    sc.interrupt( in );
+  void interrupt( Signal sig ){
+    sc.interrupt( sig );
   }
 }
 
@@ -115,7 +77,7 @@ class SnakePauseScene extends Scene {
   void update() { println( "pause" ); }
   void render() {}
   
-  void interrupt( Input in ){}
+  void interrupt( Signal sig ){}
 }
 
 
@@ -132,5 +94,5 @@ class SnakeEndScene extends Scene {
   void update() { println( "end" ); }
   void render() {}
   
-  void interrupt( Input in ){} 
+  void interrupt( Signal sig ){} 
 }

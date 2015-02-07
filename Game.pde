@@ -8,7 +8,7 @@ class Game {
   void switchScene( Scene scene )  { toPlay = scene; }
   void update() { toPlay.update(); }
   void render() { toPlay.render(); }
-  void interrupt( Input in ){ toPlay.interrupt( in ); }
+  void interrupt( Signal sig ){ toPlay.interrupt( sig ); }
 }
 
 abstract class Scene {
@@ -16,7 +16,7 @@ abstract class Scene {
   
   Scene( Game g ){ game = g; }
   abstract void update();
-  abstract void interrupt( Input in );
+  abstract void interrupt( Signal sig );
   abstract void render();
   
   void switchScene( String sceneName )

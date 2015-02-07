@@ -78,9 +78,9 @@ class SnakeCore {
   }
   
   
-  void interrupt( Input in ){
-    Snake s = snakes.get( in.getPlayer() );
-    s.setDirection( in.getCommand() );
+  void interrupt( Signal sig ){
+    Snake s = snakes.get( sig.getPlayer() );
+    s.setDirection( sig.getCommand() );
   }
   
 };
