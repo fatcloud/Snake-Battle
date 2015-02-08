@@ -11,10 +11,12 @@ class keyData {
     _keyCode = ikeyCode;
   }
   
+  
   keyData( char ikey ){
     _key     = ikey;
     _keyCode = -1;
   }
+  
   
   keyData( int ikeyCode ){
     _key = CODED;
