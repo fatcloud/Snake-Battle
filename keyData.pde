@@ -21,13 +21,17 @@ class keyData {
     _keyCode = ikeyCode;
   }
 
-  public int hashCode(){
+
+  @Override
+  int hashCode(){
     if( _key == CODED )
       return _keyCode;
     else
       return _key;
   }
-  
+
+
+  @Override
   boolean equals( Object obj ){
     if( !( obj instanceof keyData ) )
       return false;
