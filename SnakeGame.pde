@@ -1,6 +1,7 @@
-class SnakeGame extends Game { 
+class SnakeGame extends Game<SnakeCore> { 
   SnakeGame(){
     scenes = new HashMap<String, Scene>();
+    core   = new SnakeCore();
     scenes.put( "start", new SnakeStartScene( this ) );
     scenes.put( "play" , new SnakePlayScene(  this ) );
     scenes.put( "pause", new SnakePauseScene( this ) );
@@ -40,12 +41,11 @@ class SnakeStartScene extends Scene {
 
 
 class SnakePlayScene extends Scene {
-  
   SnakeCore sc;
   
   SnakePlayScene( Game g ){
     super( g );
-    sc = new SnakeCore();
+    sc = (SnakeCore)g.getCore();
     sc.setField( 79, 59 );
     sc.setPlayersNum(2);
   }

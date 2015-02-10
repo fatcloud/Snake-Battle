@@ -1,9 +1,11 @@
 
 
-class Game {
+class Game<T> {
   HashMap<String, Scene> scenes;
   Scene toPlay;
+  T     core;
   
+  T    getCore(){ return core; }
   void switchScene( String sceneName ){ toPlay = scenes.get( sceneName ); }
   void switchScene( Scene scene )  { toPlay = scene; }
   void update() { toPlay.update(); }
