@@ -18,7 +18,6 @@ class Snake implements Visible {
       GO_RIGHT       = 1,
       GO_UP          = 2,
       GO_DOWN        = 3;
-      
   
   Snake( int x, int y, int l ){
     int initLength = l;
@@ -27,9 +26,8 @@ class Snake implements Visible {
     direction = 0;
     
     bodyParts.add( head );
-    for( int i = 0; i < initLength; ++i ){
-      //bodyParts.
-    }
+    for( int i = 0; i < initLength; ++i )
+      bodyParts.add( new SnakeBody(x,y) );
   }
   
   
@@ -49,7 +47,7 @@ class Snake implements Visible {
   void updatePosition( PVector fieldSize ){
     //head
     SnakeBody sb = bodyParts.get(0);
-    for( int i = bodyParts.size() - 1; i == 1; --i){
+    for( int i = bodyParts.size() - 1; i > 0; --i){
       SnakeBody sbp = bodyParts.get(i);
       sbp.x = bodyParts.get( i - 1 ).x;
       sbp.y = bodyParts.get( i - 1 ).y;
@@ -121,8 +119,8 @@ class Signal{
       GAME_PAUSE     = 6,
       GAME_CONTINUE  = 7;
     
-    int  command;    
-    int  player;
+    private int  command;    
+    private int  player;
 
     Signal( int c, int p ) {
       command = c;

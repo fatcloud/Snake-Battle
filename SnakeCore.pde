@@ -16,7 +16,7 @@ class SnakeCore {
   SnakeCore(){
     fieldSize = new PVector( 80, 60 );
     snakes    = new ArrayList<Snake>();
-    snakes.add( new Snake(5,5,1) );
+    snakes.add( new Snake(5,5,10) );
     // initialize game state such as score (?)
     // initialize the snakes
     // initialize foods
