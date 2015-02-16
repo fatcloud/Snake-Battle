@@ -28,10 +28,10 @@ void initKeyCommands() {
   keyMap.put( new keyData('s'), new Signal( Signal.GO_DOWN   , 0 ) );
   keyMap.put( new keyData(' '), new Signal( Signal.GAME_START, -1) );
 
-  keyMap.put( new keyData( LEFT  ), new Signal( Signal.GO_UP    , 1 ) );
-  keyMap.put( new keyData( UP    ), new Signal( Signal.GO_DOWN  , 1 ) );
+  keyMap.put( new keyData( LEFT  ), new Signal( Signal.GO_LEFT  , 1 ) );
+  keyMap.put( new keyData( UP    ), new Signal( Signal.GO_UP    , 1 ) );
   keyMap.put( new keyData( RIGHT ), new Signal( Signal.GO_RIGHT , 1 ) );
-  keyMap.put( new keyData( DOWN  ), new Signal( Signal.GO_LEFT  , 1 ) );
+  keyMap.put( new keyData( DOWN  ), new Signal( Signal.GO_DOWN  , 1 ) );
 
 }
 

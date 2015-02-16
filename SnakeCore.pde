@@ -16,15 +16,25 @@ class SnakeCore {
   SnakeCore(){
     fieldSize = new PVector( 80, 60 );
     snakes    = new ArrayList<Snake>();
-    snakes.add( new Snake(5,5,10) );
+    newSnake( 5, 5, 10, #B47535 );
+    newSnake( 50, 5, 10, #B43535 );
     // initialize game state such as score (?)
     // initialize the snakes
     // initialize foods
   }
   
+  void newSnake( int x, int y, int len, color c ){
+    snakes.add( new Snake( this ) );
+    Snake s = snakes.get( snakes.size() - 1 );
+    
+    s.setHeadPosition( x, y );
+    s.setLength( len );
+    s.setColor( c );
+  }
+  
   void render() {
     for ( Snake s : snakes )
-      s.render( gridSize );
+      s.render();
     
     //for ( Food f : foods )
     //  f.render( gridSize );

@@ -4,44 +4,60 @@ interface Visible {
 
 
 class Snake implements Visible {
+
+  // the snake game
+  SnakeCore  snakeCore;
   
+  // imformation required for rendering
+  color   col;
+  
+  // imformation about location, length
   ArrayList<SnakeBody> bodyParts;
 
-  int     speed;
-  boolean alive;
-  color   col;
-  int     state;
+  int     state;          // Alive? Invincible? Normal? etc.
   int     direction;
-  
+  int     speed;
+
   public static final int 
       GO_LEFT        = 0,
       GO_RIGHT       = 1,
       GO_UP          = 2,
       GO_DOWN        = 3;
   
-  Snake( int x, int y, int l ){
-    int initLength = l;
-    SnakeBody head = new SnakeBody(x,y);
+  Snake( SnakeCore sc ){
+    snakeCore = sc;
+    SnakeBody head = new SnakeBody(0,0);
     bodyParts = new ArrayList<SnakeBody>();
     direction = 0;
     
     bodyParts.add( head );
-    for( int i = 0; i < initLength; ++i )
-      bodyParts.add( new SnakeBody(x,y) );
   }
   
+  void setHeadPosition( int x, int y ) {
+    SnakeBody head = bodyParts.get(0);
+    head.set( x, y );
+  }
   
-  void setDirection( int dir ){
+  void setLength( int len ){
+    int initLen = bodyParts.size();
+    if( len > initLen ) {
+      SnakeBody sb = bodyParts.get( bodyParts.size() - 1 );
+      for( int i = initLen; i < len; ++i )
+        bodyParts.add( new SnakeBody( sb.x, sb.y) );
+    } else {
+      for ( int i = initLen - 1; i > len ; --i ) 
+        bodyParts.remove( i );
+    }
+  }
+  
+  void setColor( color c ) {
+    col = c;
+  }
+  
+  void setDirection( int dir ) {
     direction = dir;
   }
   
-  
-  void render( int gridSize ) {
-    for ( SnakeBody sb : bodyParts ) {
-      fill(0,0,255);
-      rect( sb.x * gridSize, sb.y * gridSize, gridSize, gridSize );
-    }
-  }
   
   
   void updatePosition( PVector fieldSize ){
@@ -87,9 +103,10 @@ class Snake implements Visible {
   
   
   void render(){
-    for( SnakeBody b : bodyParts ){
-      fill(255);
-      ellipse(b.x, b.y,100,100);
+    for( SnakeBody sb : bodyParts ){
+      fill( col );
+      int gridSize = snakeCore.gridSize;
+      rect( sb.x * gridSize, sb.y * gridSize, gridSize, gridSize );
     }
   }
   
