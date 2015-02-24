@@ -8,14 +8,14 @@ class Game<T> {
   T    getCore(){ return core; }
   void switchScene( String sceneName ){ toPlay = scenes.get( sceneName ); }
   void switchScene( Scene scene )  { toPlay = scene; }
+  
   void update() { toPlay.update(); }
   void render() { toPlay.render(); }
   void interrupt( Signal sig ){ toPlay.interrupt( sig ); }
 }
 
 abstract class Scene {
-  Game game;
-  
+  Game game; 
   Scene( Game g ){ game = g; }
   abstract void update();
   abstract void interrupt( Signal sig );

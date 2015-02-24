@@ -6,6 +6,9 @@
 class keyData {
   char _key;
   int  _keyCode;
+  
+  ///////////// Three different constructor! ////////////////
+  
   keyData( char ikey, int ikeyCode ){
     _key     = ikey;
     _keyCode = ikeyCode;
@@ -23,6 +26,7 @@ class keyData {
     _keyCode = ikeyCode;
   }
 
+  //////////// hashCode() and equals( Object ) ////////////////
 
   @Override
   int hashCode(){

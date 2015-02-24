@@ -66,25 +66,6 @@ class SnakeCore {
     for( Snake s : snakes )
       s.updatePosition( fieldSize );
     
-    
-    /*
-    // 2. determine if foods are eatten/ if there is any collision
-    for( Food f : Foods ) {
-      for( Snake s : snakes ) {
-        if( s.headPosition() == f.position() ) {
-          s.eat( f );
-          PVector pos = f.get();
-          while( onASnake( pos ) ){
-            pos = random2D();
-            pos.x = floor( pos.x * ( fieldSize.x + 1 ) );
-            pos.y = floor( pos.y * ( fieldSize.y + 1 ) );
-          }
-          food.setPosition( pos );
-        }
-      }
-    }
-    */
-    
   }
   
   

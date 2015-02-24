@@ -16,8 +16,9 @@ class Snake implements Visible {
 
   int     state;          // Alive? Invincible? Normal? etc.
   int     direction;
-  int     speed;
-
+  float   speed;          // unit: steps per frame
+  
+  
   public static final int 
       GO_LEFT        = 0,
       GO_RIGHT       = 1,
@@ -61,6 +62,7 @@ class Snake implements Visible {
   
   
   void updatePosition( PVector fieldSize ){
+        
     //head
     SnakeBody sb = bodyParts.get(0);
     for( int i = bodyParts.size() - 1; i > 0; --i){

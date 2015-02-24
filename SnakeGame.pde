@@ -4,8 +4,8 @@ class SnakeGame extends Game<SnakeCore> {
     core   = new SnakeCore();
     scenes.put( "start", new SnakeStartScene( this ) );
     scenes.put( "play" , new SnakePlayScene(  this ) );
-    scenes.put( "pause", new SnakePauseScene( this ) );
-    scenes.put( "end"  , new SnakeEndScene(   this ) );
+    scenes.put( "pause", new NullScene( this ) );
+    scenes.put( "end"  , new NullScene( this ) );
     toPlay = scenes.get("start"); 
   }
   
@@ -17,9 +17,7 @@ class SnakeGame extends Game<SnakeCore> {
 
 class SnakeStartScene extends Scene {
   SnakeStartScene( Game g ){ super( g ); }
-  void update() { 
-    //println("Start");
-  }
+  void update() {}
   
   void render() {
     background(0);
@@ -70,28 +68,10 @@ class SnakePlayScene extends Scene {
 
 
 
-
-class SnakePauseScene extends Scene {
-  SnakePauseScene( Game g ){ super( g ); }
-  
-  void update() { println( "pause" ); }
-  void render() {}
-  
-  void interrupt( Signal sig ){}
-}
-
-
-
-
-
-
-
-
-
-class SnakeEndScene extends Scene {
-  SnakeEndScene( Game g ){ super( g ); }
+class NullScene extends Scene {
+  NullScene( Game g ){ super( g ); }
  
-  void update() { println( "end" ); }
+  void update() { println( "null scene" ); }
   void render() {}
   
   void interrupt( Signal sig ){} 
