@@ -9,12 +9,12 @@ class Field {
     // TODO
   }
   
-  boolean isDoor( PVector pos ){
+  boolean isDoor( PVector pos ){return false;
     // TODO
     // check if there is a door at pos
   }
   
-  PVector getDoorOut( PVector pos ){
+  PVector getDoorOut( PVector pos ){return null;
     // TODO
     // get where the snake should go after it reaches "pos"
   }
