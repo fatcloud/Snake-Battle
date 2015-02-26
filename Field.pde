@@ -1,22 +1,67 @@
 
 
 class Field {
-  //int gridSize = 10;
-  //ArrayList< PVector > doorsIn;
-  //ArrayList< PVector > doorsOut;
+  private int gridSize = 10;
+  private HashMap< Door, Door > doorMap;
   
-  Field() {
+  
+  private class Door {
+    PVector pos;
+    char dir;
+    //set door coordinates;
+    //set door accept direction;
+    //draw a cube to represent the door and features the surface that could be entered with strong stroke
+    Door( PVector p , char d ) {
+      pos = new PVector(p);
+      dir = d;
+    }
+    
+    @Override
+    int hashCode() {
+      return pos.x+pos.y;
+    }
+    
+    @Override
+    boolean equals ( Object obj ) {
+      if(!( obj instanceof Door)) 
+        return false;
+      
+      Door d = (Door)obj;
+      if ( d.pos.equals(pos) && d.dir.equals(dir) )
+        return true;
+      
+      return false;
+    }
+    
+  }  
+  
+  Field( int x, int y ) {
     // TODO
+           
+    
+    
+  }
+    
+    
+    
+    
   }
   
-  boolean isDoor( PVector pos ){
-    // TODO
-    // check if there is a door at pos
+  int getGridSize() {
+    return gridSize;
   }
   
-  PVector getDoorOut( PVector pos ){
+  boolean isEnteringDoor( PVector pos, char dir ){
     // TODO
-    // get where the snake should go after it reaches "pos"
+    return ( getDoorOut( pos, dir ) != null );
+  }
+  
+  Door getDoorOut( PVector pos, char dir ){
+    Door d = new Door( pos, dir );
+    Door dOut;
+    
+    dOut = doorMap.get(d); 
+    return dOut;
   }
   
 }
