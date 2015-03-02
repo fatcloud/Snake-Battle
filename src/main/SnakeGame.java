@@ -1,4 +1,4 @@
-package mainEntry;
+package main;
 import SnakeScenes.NullScene;
 import SnakeScenes.SnakePlayScene;
 import SnakeScenes.SnakeStartScene;

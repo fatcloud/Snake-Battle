@@ -1,4 +1,4 @@
-package mainEntry;
+package main;
 import util.Signal;
 import SnakeObjects.Food;
 import SnakeObjects.Snake;

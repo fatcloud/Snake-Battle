@@ -1,4 +1,4 @@
-package mainEntry;
+package main;
 
 import util.Signal;
 import java.util.HashMap;

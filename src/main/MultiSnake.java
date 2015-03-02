@@ -1,4 +1,4 @@
-package mainEntry;
+package main;
 import util.KeyData;
 import util.Signal;
 import processing.core.*;
@@ -16,7 +16,7 @@ SnakeGame  sg;
 HashMap<KeyData, Signal> keyMap = new HashMap<KeyData, Signal>();
 
     public static void main(String[] args) {
-        MultiSnake.main("mainEntry.MultiSnake");
+        PApplet.main("main.MultiSnake");
     }
 
     public void setup(){

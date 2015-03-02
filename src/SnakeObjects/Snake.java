@@ -6,8 +6,8 @@
 package SnakeObjects;
 
 import java.util.ArrayList;
-import mainEntry.SnakeCore;
-import mainEntry.Visible;
+import main.SnakeCore;
+import main.Visible;
 import processing.core.PApplet;
 import processing.core.PVector;
 

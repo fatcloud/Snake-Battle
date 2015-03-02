@@ -5,8 +5,8 @@
  */
 package SnakeScenes;
 
-import mainEntry.Game;
-import mainEntry.Scene;
+import main.Game;
+import main.Scene;
 import util.Signal;
 import processing.core.PApplet;
 /**
