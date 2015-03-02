@@ -38,7 +38,26 @@ public class Field {
     }
     
   }  
+  
+  public Field( int x, int y ){
+    doorMap = new HashMap< Door, Door >();
     
+    for ( int i = 0; i < x ; i++ ) {
+      doorMap.put( new Door( new PVector(i,0),'u' ) ,
+                   new Door( new PVector(i,y),'d' ) ); 
+      doorMap.put( new Door( new PVector(i,y),'d' ) ,
+                   new Door( new PVector(i,0),'u' ) ); 
+    }
+    
+    for ( int j = 0; j < y ; j++ ) {
+      doorMap.put( new Door( new PVector(0,j),'l' ) ,
+                   new Door( new PVector(x,j),'r' ) ); 
+      doorMap.put( new Door( new PVector(x,j),'l' ) ,
+                   new Door( new PVector(0,j),'r' ) ); 
+    }
+  }
+  
+  
   int getGridSize() {
     return gridSize;
   }
