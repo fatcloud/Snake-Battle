@@ -37,6 +37,14 @@ public class Field {
       return false;
     }
     
+    public PVector getDoorPos() { 
+        PVector p = new PVector( pos.x, pos.y );
+        return p;
+    }
+    
+    public char getDoorDir() { 
+        return dir;
+    }
   }  
   
   public Field( int x, int y ){
@@ -52,8 +60,8 @@ public class Field {
     for ( int j = 0; j < y ; j++ ) {
       doorMap.put( new Door( new PVector(0,j),'l' ) ,
                    new Door( new PVector(x,j),'r' ) ); 
-      doorMap.put( new Door( new PVector(x,j),'l' ) ,
-                   new Door( new PVector(0,j),'r' ) ); 
+      doorMap.put( new Door( new PVector(x,j),'r' ) ,
+                   new Door( new PVector(0,j),'l' ) ); 
     }
   }
   
@@ -66,7 +74,7 @@ public class Field {
     return ( getDoorOut( pos, dir ) != null );
   }
   
-  Door getDoorOut( PVector pos, char dir ){
+  public Door getDoorOut( PVector pos, char dir ){
     Door d = new Door( pos, dir );
     Door dOut;
     
@@ -74,4 +82,19 @@ public class Field {
     return dOut;
   }
   
+  public PVector getDoorOutPos( PVector pos, char dir ){
+    Door d = new Door( pos, dir );
+    Door dOut;
+    
+    dOut = doorMap.get(d); 
+    return dOut.getDoorPos();
+  }
+  
+  public char getDoorOutDir( PVector pos, char dir ){
+    Door d = new Door( pos, dir );
+    Door dOut;
+    
+    dOut = doorMap.get(d); 
+    return dOut.getDoorDir();
+  }
 }

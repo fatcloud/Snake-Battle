@@ -11,6 +11,10 @@ import main.Visible;
 import processing.core.PApplet;
 import processing.core.PVector;
 
+import SnakeObjects.Field;
+
+
+
 /**
  *
  * @author fatcloud
@@ -27,21 +31,21 @@ public class Snake implements Visible {
   ArrayList<SnakeBody> bodyParts;
 
   int     state;          // Alive? Invincible? Normal? etc.
-  int     direction;
+  char     direction;
   float   speed;          // unit: steps per frame
   
   
-  public static final int 
-      GO_LEFT        = 0,
-      GO_RIGHT       = 1,
-      GO_UP          = 2,
-      GO_DOWN        = 3;
+  public static final char 
+      GO_LEFT        = 'l',
+      GO_RIGHT       = 'r',
+      GO_UP          = 'u',
+      GO_DOWN        = 'd';
   
   public Snake( SnakeCore sc ){
     snakeCore = sc;
     SnakeBody head = new SnakeBody(0,0);
     bodyParts = new ArrayList<SnakeBody>();
-    direction = 0;
+    direction = 'l';
     
     bodyParts.add( head );
   }
@@ -67,13 +71,13 @@ public class Snake implements Visible {
     col = c;
   }
   
-  public void setDirection( int dir ) {
+  public void setDirection( char dir ) {
     direction = dir;
   }
   
   
   
-  public void updatePosition( PVector fieldSize ){
+  public void updatePosition( ){
         
     //head
     SnakeBody sb = bodyParts.get(0);
@@ -83,27 +87,44 @@ public class Snake implements Visible {
       sbp.y = bodyParts.get( i - 1 ).y;
     }
     
+    //check if the position of head match doors position;
+    //and the direction fit any door direction, tell the snake
+    //go through the door,
+    //otherwise, take snake into next position.
     //move sb
-    switch (direction) {
-      case GO_LEFT:
-        sb.x = sb.x - 1;
-        if( sb.x < 0 ) sb.x = fieldSize.x;
-        break;
-      case GO_RIGHT:
-        sb.x = sb.x + 1;
-        if( sb.x > fieldSize.x ) sb.x = 0;
-        break;
-      case GO_UP:
-        sb.y = sb.y - 1;
-        if( sb.y < 0 ) sb.y = fieldSize.y;
-        break;
-      case GO_DOWN:
-        sb.y = sb.y + 1;
-        if( sb.y > fieldSize.y ) sb.y = 0;
-        break;
+    PVector headPos = new PVector( sb.x, sb.y );
+    Field f = snakeCore.getField(); 
+    
+    if ( f.isEnteringDoor( headPos, direction ) ) {
+        PVector dp = f.getDoorOutPos( headPos, direction );
+        char    dd = f.getDoorOutDir( headPos, direction );
+        sb.x = dp.x; 
+        sb.y = dp.y;
+        if( dd == 'u' )
+            direction = 'd';
+        else if( dd == 'l' )
+            direction = 'r';
+        else if( dd == 'r' )
+            direction = 'l';
+        else if( dd == 'd' )
+            direction = 'u';
+        
+    } else {
+        switch (direction) {
+            case GO_LEFT:
+                sb.x = sb.x - 1;
+                break;
+            case GO_RIGHT:
+                sb.x = sb.x + 1;
+                break;
+            case GO_UP:
+                sb.y = sb.y - 1;
+                break;
+            case GO_DOWN:
+                sb.y = sb.y + 1;
+                break;
+        }        
     }
-    
-    
   }
   
   
