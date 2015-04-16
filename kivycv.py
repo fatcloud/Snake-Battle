@@ -25,21 +25,6 @@ class CamApp(App):
         Clock.schedule_interval(self.update, 1.0/60.0)
         return layout
 
-    def CreateImage(self, (height, width), bits=np.uint8, channels=3, color=(0, 0, 0)): # (cv.GetSize(frame), 8, 3)
-        """Create new image(numpy array) filled with certain color in RGB"""
-        # Create black blank image
-        if bits == 8:
-            bits = np.uint8
-        elif bits == 32:
-            bits = np.float32
-        elif bits == 64:
-            bits = np.float64
-        image = np.zeros((height, width, channels), bits)
-        if color != (0, 0, 0):
-            # Fill image with color
-            image[:] = color
-        return image
-
 
     def update(self, dt):
         # display image from cam in opencv window
