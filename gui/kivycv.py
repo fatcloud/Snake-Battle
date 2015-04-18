@@ -24,7 +24,6 @@ class CamApp(App):
         Clock.schedule_interval(self.update, 1.0/60.0)
         return layout
 
-
     def update(self, dt):
         # display image from cam in opencv window
         ret, frame = self.capture.read()
@@ -35,6 +34,9 @@ class CamApp(App):
         texture1.blit_buffer(buf, colorfmt='bgr', bufferfmt='ubyte')
         # display image from the texture
         self.img1.texture = texture1
+
+    def on_stop(self):
+        self.capture.release()
 
 if __name__ == '__main__':
     CamApp().run()

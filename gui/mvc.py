@@ -2,32 +2,6 @@
 MVC model for multiple controllers and displayers
 =================================================
 
-There are three base classes in this file. 
-All three classes are supposed to be running
-on independent thread.
-
-class "Model"" is a thread that update the internal
-state according to time transition and input "signal".
-
-class "Controller" interprets input from various
-source such as keyboard/mouse/camera/serial port
-to "signal" that are indeed meaningful to "Model"
-
-class "Displayer" ask Model for what to render periodically
-
-
-Model:
-    _update()               infinite loop of the thread
-    push_signal(signal)     call by Controller
-    render()                call by Displayer
-
-Displayer:
-    _render()               infinite loop of the thread.
-                            will call Model.render()
-    
-Controller:
-    _interpret_input        infinite loop of the thread.
-                            will call Model.push_signal()
 
 '''
 
@@ -71,9 +45,10 @@ class Displayer:
     
     # Displayer <--- Model.get_render_cmd()
     # this function should be scheduled in an infinite loop
-    def _update_frame(self):
+    def _update_frame(self, loop=False):
         cmds = self._model.get_render_cmd()
         self._render_from_cmd(cmds)
+        
         
     def _render_from_cmd(self, cmds):
         raise NotImplementedError(
