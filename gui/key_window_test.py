@@ -5,12 +5,12 @@ import Queue
 import time
 
 import kivygui
-import model
+import mvc
 from kivy.graphics import Color, Rectangle
 from random import random as r
 from kivy.base import runTouchApp
 
-class SimpleModel(model.Model):
+class SimpleModel(mvc.Model):
 
     def __init__(self, **kwargs):
         super(SimpleModel, self).__init__(**kwargs)

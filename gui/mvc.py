@@ -38,6 +38,9 @@ class Model(object):
                 "Please Implement " + self.__class__.__name__ + ".get_render_cmd()")
 
 
+                
+''' not done yet
+                
 class Displayer:
     
     def set_model(model):
@@ -71,4 +74,4 @@ class Controller:
         raise NotImplementedError(
                 "Please Implement " + self.__class__.__name__ + "._key_to_siganl()")
     
-            
+'''         

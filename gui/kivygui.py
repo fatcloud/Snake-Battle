@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 
+'''
+KivyGUI is a base class that meant to be inherited to create app
+that convert keyboard event to "Model" signal and grab render
+command back when it is ready to update the next frame
+'''
+
 import thread
 import time
 
