@@ -1,11 +1,9 @@
 #!/usr/bin/env python
 
 import thread
-import Queue
 import time
 
 from kivy.uix.widget import Widget
-from kivy.app import App
 from kivy.graphics import Color, Rectangle
 from random import random as r
 from kivy.clock import Clock
@@ -13,40 +11,12 @@ from kivy.core.window import Window
 from kivy.base import runTouchApp
 
 
-class Model(object):
-    
-    def __init__(self):
-        self._signal_queue = Queue.PriorityQueue()
-
-    # Infinite loop to update the Model
-    def loop(self):
-        while True:
-            queue = self._signal_queue
-            while not queue.empty():
-                signal = queue.get()
-                self.handle_signal(signal)
-                queue.task_done()
-        
-    # Controller will call this
-    def put_signal(self, signal):
-        self._signal_queue.put(signal)
-    
-    # This function receives signal
-    def handle_signal(self, signal):
-        raise NotImplementedError(
-                "Please Implement this method")
-        
-    # Displayer will call this
-    def get_render_cmd(self):
-        raise NotImplementedError(
-                "Please Implement this method")
-
 # Pass a model that has model.put_signal(signal)
 # and model.get_render_cmd() into this constructor
-class SimpleWindow(Widget):
+class KivyGUI(Widget):
 
     def __init__(self, model=None, **kwargs):
-        super(SimpleWindow, self).__init__(**kwargs)
+        super(KivyGUI, self).__init__(**kwargs)
         
         # set the model
         self._model = model
@@ -76,12 +46,12 @@ class SimpleWindow(Widget):
     # Translate keyboard command to model signal
     def _key_to_siganl(self, keyboard, keycode, text, modifiers):
         raise NotImplementedError(
-                "Please Implement this method")
+                "Please Implement " + self.__class__.__name__ + "._key_to_siganl()")
     
     # Do the actual drawing according to the commands returned by Model
     def _render_from_cmd(self, cmds):
         raise NotImplementedError(
-                "Please Implement _render_from_cmd")
+                "Please Implement " + self.__class__.__name__ + "._render_from_cmd()")
     
 
 
@@ -91,6 +61,6 @@ if __name__ == '__main__':
     print __doc__
     sm = SimpleModel()
     thread.start_new_thread(sm.loop, ())
-    runTouchApp(SimpleWindow(sm))
+    runTouchApp(KivyGUI(sm))
 
 

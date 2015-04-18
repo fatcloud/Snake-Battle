@@ -5,8 +5,12 @@ import Queue
 import time
 
 import kivygui
+import model
+from kivy.graphics import Color, Rectangle
+from random import random as r
+from kivy.base import runTouchApp
 
-class SimpleModel(kivygui.Model):
+class SimpleModel(model.Model):
 
     def __init__(self, **kwargs):
         super(SimpleModel, self).__init__(**kwargs)
@@ -23,38 +27,8 @@ class SimpleModel(kivygui.Model):
         return cmds
 
         
-# Pass a model that has model.put_signal(signal)
-# and model.get_render_cmd() into this constructor
-class SimpleWindow(Widget):
-
-    def __init__(self, model=None, **kwargs):
-        super(SimpleWindow, self).__init__(**kwargs)
-        
-        # set the model
-        self._model = model
-        
-        # Keyboard Controller
-        self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
-        self._keyboard.bind(on_key_down=self._on_key_down)
-        
-        # Displayer
-        Clock.schedule_interval(self._update_frame, 1.0/60.0)
-        
-    # Displayer <--- Model.get_render_cmd()
-    def _update_frame(self, dt):
-        cmds = self._model.get_render_cmd()
-        self._render_from_cmd(cmds)
-
-    def _keyboard_closed(self):
-        self._keyboard.unbind(on_key_down=self._on_key_down)
-        self._keyboard = None
+class SimpleWindow(kivygui.KivyGUI):
     
-    # Controller ---> model.put_signal
-    def _on_key_down(self, keyboard, keycode, text, modifiers):
-        sigs = self._key_to_siganl(keyboard, keycode, text, modifiers)
-        self._model.put_signal(sigs)
-        return True
-        
     # translate keyboard command to model signal    
     def _key_to_siganl(self, keyboard, keycode, text, modifiers):
         if keycode[1] == 'up':
@@ -62,8 +36,6 @@ class SimpleWindow(Widget):
             return sig
         else:
             exit()
-        #raise NotImplementedError(
-        #        "Please Implement this method")
     
     # interpret model render command and do the actual drawing
     def _render_from_cmd(self, cmds):
@@ -72,10 +44,7 @@ class SimpleWindow(Widget):
                 Color(r(), 1, 1, mode='hsv')
                 Rectangle(pos=(r() * self.width,
                     r() * self.height), size=(20, 20))
-        #raise NotImplementedError(
-        #        "Please Implement this method")
     
-
 
 
 

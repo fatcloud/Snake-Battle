@@ -35,77 +35,65 @@ Controller:
 import Queue
 
 
-def loop(function, *args, **kagrs):
-    wihle True:
-        function(args, kargs)
-
-
-class Model:
-
-    def __init__(self):
-        # connect the controllers
-        self._event_queue = Queue.PriorityQueue()
+class Model(object):
     
+    def __init__(self):
+        self._signal_queue = Queue.PriorityQueue()
+
+    # Infinite loop to update the Model
+    def loop(self):
+        while True:
+            queue = self._signal_queue
+            while not queue.empty():
+                signal = queue.get()
+                self.handle_signal(signal)
+                queue.task_done()
+        
     # Controller will call this
     def put_signal(self, signal):
-        self._event_queue.put(signal)
+        self._signal_queue.put(signal)
     
-    # Infinite loop to update the Model
-    def update(self):
+    # This function receives signal
+    def handle_signal(self, signal):
         raise NotImplementedError(
-            "Model._update() not implemented yet")
-            
-    # Displayers will call this
-    def render(self):
-        # return the drawing commands to the caller
+                "Please Implement " + self.__class__.__name__ + ".handle_signal()")
+        
+    # Displayer will call this
+    def get_render_cmd(self):
         raise NotImplementedError(
-            "Model.render() not implemented yet")
+                "Please Implement " + self.__class__.__name__ + ".get_render_cmd()")
 
-            
+
 class Displayer:
-
-    # Displayers must maintain a pointer to a model
-    def __init__(self, model=None):
+    
+    def set_model(model):
         self._model = model
     
-    @model.setter
-    def model(self,model):
-        self._model = model
-    
-    
-    # There should be a infinite loop that run this
-    def render(self):
-        cmds = self._model.render()
-        self._interpret(cmds)
-    
-    
-    # Helper functions that actually define the behaviour of
-    # this displayer
-    def _interpret(self, cmds):
+    # Displayer <--- Model.get_render_cmd()
+    # this function should be scheduled in an infinite loop
+    def _update_frame(self):
+        cmds = self._model.get_render_cmd()
+        self._render_from_cmd(cmds)
+        
+    def _render_from_cmd(self, cmds):
         raise NotImplementedError(
-            "Displayer._interpret(cmds) not implemented yet")
+                "Please Implement " + self.__class__.__name__ + "._render_from_cmd()")
+    
             
             
 class Controller:
-
-    # Controller must maintain a pointer to a model as well
-    def __init__(self, model=None):
+    def set_model(model):
         self._model = model
     
-    @model.setter
-    def model(self,model):
-        self._model = model
-    
-    
-    # Model.put_signal() can be triggered in two style:
-    # polling (loop checking) and interrupt
-    # At least one of the two function have to be implemented
-    # to make a controller useful
-    def poll(self):
-        raise NotImplementedError(
-            "Controller.poll() not implemented yet")
-
+    # external action triggers an interrupt
     def interrupt(self, *args, **kargs):
+        sigs = self._convert_to_siganl(*args, **kargs)
+        self._model.put_signal(sigs)
+        return True
+        
+    # Translate keyboard command to model signal
+    def _convert_to_siganl(self, *args, **kargs):
         raise NotImplementedError(
-            "Controller.interrupt() not implemented yet")
+                "Please Implement " + self.__class__.__name__ + "._key_to_siganl()")
+    
             
