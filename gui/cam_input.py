@@ -13,7 +13,7 @@ class CamWatcher(mvc.Controller):
 
     def _convert_to_siganl(self, *args, **kargs):
         ret, frame = self.capture.read()
-        cv2.imshow(frame)
+        
 
     def on_stop(self):
         self.capture.release()
