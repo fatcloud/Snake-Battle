@@ -51,7 +51,6 @@ class SimpleWindow(kivygui.KivyGUI):
 if __name__ == '__main__':
     print __doc__
     sm = SimpleModel()
-    thread.start_new_thread(sm.loop, ())
     runTouchApp(SimpleWindow(sm))
 
 
