@@ -1,90 +1,97 @@
 '''
-MVC model for multiple controllers and displayers
+MVC model for multiple InputProcessors and OutputExecutors
 =================================================
 
 
 '''
 
-
 import Queue
-import thread
 
-class Model(object):
+
+class Looper(object):
     
-    def __init__(self, start_thread=True):
-        # initialize the queue
-        self._signal_queue = Queue.PriorityQueue()
-        # start a thread to keep the model updated
-        if start_thread:
-            thread.start_new_thread(self.loop, ())
-
-    # Infinite loop to update the Model
-    def loop(self):
+    def __init__(self):
+        self.looper = []
+    
+    def infinite_loop(self, func):
         while True:
-            queue = self._signal_queue
-            while not queue.empty():
-                signal = queue.get()
-                self.handle_signal(signal)
-                queue.task_done()
+            func()
+    
+    def start_loop(self):
+        for looper in self.looper:
+            thread.start_new_thread(infinite_loop, looper)
         
-    # Controller will call this
+
+class Model(Looper):
+    
+    def __init__(self):
+        super(Model, self).__init__()
+        self.__signal_queue = Queue.PriorityQueue()
+        self.looper = self.looper.append(self.__consume_signals)
+    
+    def __consume_signals(self):
+        queue = self.__signal_queue
+        while not queue.empty():
+            signal = queue.get()
+            self._handle_signal(signal)
+            queue.task_done()
+        
+    # InputProcessor will call this
     def put_signal(self, signal):
-        self._signal_queue.put(signal)
+        self.__signal_queue.put(signal)
     
     # This function receives signal
-    def handle_signal(self, signal):
+    def _handle_signal(self, signal):
         raise NotImplementedError(
                 "Please Implement " + self.__class__.__name__ + ".handle_signal()")
         
-    # Displayer will call this
-    def get_render_cmd(self):
+    # OutputExecutor will call this
+    def export_output_cmd(self, caller):
         raise NotImplementedError(
-                "Please Implement " + self.__class__.__name__ + ".get_render_cmd()")
+                "Please Implement " + self.__class__.__name__ + ".export_output_cmd()")
 
 
+          
                 
-''' not done yet
-                
-class Displayer:
+class OutputExecutor(Looper):
     
-    def set_model(model):
-        self._model = model
+    """
+    GUI widget, audio effect, or even the movement of a robotic arm
+    are all supposed to be controlled by one or more OutputExecutor
     
-    # Displayer <--- Model.get_render_cmd()
-    # this function should be scheduled in an infinite loop
-    def _update_frame(self, loop=False):
-        cmds = self._model.get_render_cmd()
-        self._render_from_cmd(cmds)
+    """
+    
+    def __init__(self):
+        self.model = None
+        self.looper = self.looper.append(update_frame)
+    
+    def update_frame(self, loop=False):
+        cmds = self.model.export_output_cmd()
+        self._execute_cmd(cmds)
         
-        
-    def _render_from_cmd(self, cmds):
+    def _execute_cmd(self, cmds):
         raise NotImplementedError(
-                "Please Implement " + self.__class__.__name__ + "._render_from_cmd()")
-    
-'''
-            
-class Controller(object):
+                "Please Implement " + self.__class__.__name__ + "._execute_cmd()")
 
-    def __init__(self, model=None, start_thread=True):
-        self._model = model
-        if model != None and start_thread == True:
-            thread.start_new_thread(self.loop, ())
+
     
-    def set_model(self, model):
-        self._model = model
+      
+class InputProcessor(Looper):
+
+    """
+    No matter your program is controlled by keyboard, mouse, camera, or even
+    a customized input device, they are supposed to be interpret by an InputProcessor
+    """
     
+    def __init__(self):
+        self.model = None
+        self.looper = self.looper.append(self.on_user_input)
+     
     # external action triggers an interrupt
-    def interrupt(self, *args, **kargs):
+    def on_user_input(self, *args, **kargs):
         sigs = self._convert_to_siganl(*args, **kargs)
-        self._model.put_signal(sigs)
-        return True
-    
-    # polling
-    def loop(self):
-        while True:
-            cmds = _convert_to_siganl(self)
-            if cmds != None:
-                self._model.put_signal(sigs)
+        if sigs != None:
+            self.model.put_signal(sigs)
     
     # Translate keyboard command to model signal
     def _convert_to_siganl(self, *args, **kargs):

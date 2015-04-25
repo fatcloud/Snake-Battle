@@ -5,6 +5,7 @@ import Queue
 import time
 
 import kivygui
+import thread
 import mvc
 from kivy.graphics import Color, Rectangle
 from random import random as r
@@ -21,8 +22,7 @@ class SimpleModel(mvc.Model):
         if signal[1] == 'show square' and signal[0] > self._sqrt_time:
             self._sqrt_time = signal[0]
             
-    # Displayers will call this
-    def get_render_cmd(self):
+    def export_output_cmd(self):
         cmds = (time.clock() < self._sqrt_time + 0.1)
         return cmds
 
@@ -30,7 +30,7 @@ class SimpleModel(mvc.Model):
 class SimpleWindow(kivygui.KivyGUI):
     
     # translate keyboard command to model signal    
-    def _key_to_siganl(self, keyboard, keycode, text, modifiers):
+    def _convert_to_siganl(self, keyboard, keycode, text, modifiers):
         if keycode[1] == 'up':
             sig = (time.clock(),'show square')
             return sig
@@ -38,7 +38,7 @@ class SimpleWindow(kivygui.KivyGUI):
             exit()
     
     # interpret model render command and do the actual drawing
-    def _render_from_cmd(self, cmds):
+    def _execute_cmd(self, cmds):
         if cmds:
             with self.canvas:
                 Color(r(), 1, 1, mode='hsv')
@@ -51,6 +51,7 @@ class SimpleWindow(kivygui.KivyGUI):
 if __name__ == '__main__':
     print __doc__
     sm = SimpleModel()
+    sm.start_loop()
     runTouchApp(SimpleWindow(sm))
 
 
