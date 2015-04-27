@@ -17,34 +17,30 @@ from kivy.core.window import Window
 from kivy.base import runTouchApp
 
 import mvc
+from mvc import InputProcessor, OutputExecutor
 
-# Pass a model that has model.put_signal(signal)
-# and model.get_render_cmd() into this constructor
-class KivyGUI(Widget, mvc.InputProcessor, mvc.OutputExecutor):
 
-    def __init__(self, model=None, **kwargs):
-        super(KivyGUI, self).__init__(**kwargs)
-        
+class KivyGUI(Widget, InputProcessor, OutputExecutor):
+
+    def __init__(self, model=None):
+        Widget.__init__(self)
         # set the model
         self.model = model
         
         # Keyboard InputProcessor
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
-        self._keyboard.bind(on_key_down=self.on_user_input)
+        self._keyboard.bind(on_key_down=self.interpret_input)
         
         # OutputExecutor
-        Clock.schedule_interval(self.update_frame, 1.0/60.0)
+        Clock.schedule_interval(self.__update_frame, 1.0/60.0)
+
+    def __update_frame(self, dt):
+        self.update_frame()
 
     def _keyboard_closed(self):
-        self._keyboard.unbind(on_key_down=self.on_user_input)
+        self._keyboard.unbind(on_key_down=self.interpret_input)
         self._keyboard = None
     
 
-
-if __name__ == '__main__':
-    print __doc__
-    sm = SimpleModel()
-    thread.start_new_thread(sm.loop, ())
-    runTouchApp(KivyGUI(sm))
 
 
