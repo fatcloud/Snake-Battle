@@ -1,4 +1,3 @@
-import mulisnake
+from snake_game import SnakeGame
 
-if __name__ == '__main__':
-    CamApp().run()
+SnakeGame().run()
