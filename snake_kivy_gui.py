@@ -25,8 +25,9 @@ class SnakeKivyGUI(KivyWorker):
             return
         
         modifier = mission['modifiers']
-        speed = len(modifier)
-        self._signal_to_model.append( {'immediate':True, 'player':player, 'command':command, 'speed':speed} )
+        speed = len(modifier) + 1
+        mission_out = {'player':player, 'command':command, 'speed':speed} 
+        self._signal_to_model.append(mission_out)
         
     def _execute_a_render_mission(self, mission):
         """handle Model mission and do the render"""

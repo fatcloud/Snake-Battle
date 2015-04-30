@@ -5,11 +5,12 @@ from math import ceil
 
 import numpy as np
 from numpy import array as ar
-
+from kivy.graphics import Color
 
 class player(object):
     def __init__(self):
         self.position = ar([0, 0])
+        self.color = Color(random(), 1, 1, mode='hsv')
         
 class SnakeCore(Worker):
     def __init__(self):
@@ -31,7 +32,7 @@ class SnakeCore(Worker):
 
     def _routine(self):
         while not self.mission_in.empty():
-            mission = self.mission_in.get()
+            mission = self.mission_in.get_nowait()
             player = self._players[mission['player']]
             cmd = mission['command']
             
@@ -39,16 +40,19 @@ class SnakeCore(Worker):
             action_dict = {'up':[0, step], 'down':[0, -step], 'left':[-step, 0], 'right':[step, 0]}
             
             shift = ar(action_dict[cmd])
-            print player.position
             player.position += shift
-            print player.position
         
     def _export_missions(self, receiver):
         m = ['clear()']
         
         for i in [0, 1]:
-            pos = str((self._players[i].position * 10).tolist())
-            
+            # draw every snake
+            player = self._players[i]
+            grid_size = self._layout['grid_size']
+            pos = str((player.position * grid_size).tolist())
+            c = player.color
+            c = str((c.h, c.s, c.v))
+            m.append('add(Color' + c + ')')
             m.append('add(Rectangle(pos='+ pos +', size=(10, 10)))')
         
         return [{'command_list':m}]
