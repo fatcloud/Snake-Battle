@@ -3,6 +3,8 @@ from kivy.core.window import Window
 from random import random
 from math import ceil
 
+import Queue
+
 import numpy as np
 from numpy import array as ar
 from kivy.graphics import Color
@@ -32,7 +34,8 @@ class SnakeCore(Worker):
 
     def _routine(self):
         while not self.mission_in.empty():
-            mission = self.mission_in.get_nowait()
+            try: mission = self.mission_in.get_nowait()
+            except Queue.Empty: break
             player = self._players[mission['player']]
             cmd = mission['command']
             

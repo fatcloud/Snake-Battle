@@ -9,7 +9,7 @@ press space bar to test the sample
 
 import thread
 import time
-
+import Queue
 from kivy.uix.widget import Widget
 from kivy.graphics import Color, Rectangle
 from random import random as r
@@ -18,7 +18,7 @@ from kivy.core.window import Window
 from kivy.base import runTouchApp
 
 from worker import Worker
-
+from worker import link_worker
 
 class KivyWorker(Widget, Worker):
 
@@ -50,13 +50,12 @@ class KivyWorker(Widget, Worker):
 
     # Pseudo co-worker
     def __on_key_down(self, keyboard, key_code, text, modifiers):
-        key_info = {'keyboard':keyboard,
+        mission = { 'keyboard':keyboard,
                     'key_code':key_code,
                     'text':text,
                     'modifiers':modifiers}
-        mission = {'immediate':True}
-        mission.update(key_info)
-        self.add_todo(mission)
+        
+        self.add_todo(mission, self)
     
     def __update_frame(self, dt):
         self.routine()
@@ -104,9 +103,14 @@ if __name__ == '__main__':
 
         def _routine(self):
             missions = self.mission_in
-            while not missions.empty():
-                mission = missions.get_nowait()
-                self._add_sqrt += mission['show square']
+            mission = missions.get()
+            self._add_sqrt += mission['show square']
+            while True:
+                try:
+                    mission = missions.get_nowait()
+                    self._add_sqrt += mission['show square']
+                except Queue.Empty:
+                    break
 
         def _export_missions(self, caller):
             if self._add_sqrt > 0:
@@ -141,7 +145,8 @@ if __name__ == '__main__':
     tm = TestModel()
     tw = TestWindow()
     # The module that work slower shall keep the list of co-workers
-    tw.init_inout_list([tm], [tm])  
-
+    link_worker(source=tw, destination=tm, caller=tw, event_driven_link=True)
+    link_worker(source=tm, destination=tw, caller=tw, event_driven_link=False)
+    
     tm.start_loop(new_thread=True)
     tw.start_loop()
