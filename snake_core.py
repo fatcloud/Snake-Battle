@@ -45,7 +45,7 @@ class SnakeCore(Worker):
             shift = ar(action_dict[cmd])
             player.position += shift
         
-    def _export_missions(self, receiver):
+    def _export_todo(self, receiver):
         m = ['clear()']
         
         for i in [0, 1]:

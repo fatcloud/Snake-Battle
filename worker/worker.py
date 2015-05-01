@@ -44,14 +44,14 @@ class Worker(object):
     def routine(self, ask_todo=True):
         if ask_todo:
             for colleague in self.in_list:
-                missions = colleague._export_missions(self)
+                missions = colleague._export_todo(self)
                 for mission in missions:
                     self.add_todo(mission, colleague)
                 
         self._routine()
         
         for colleague in self.out_list:
-            missions = self._export_missions(colleague)
+            missions = self._export_todo(colleague)
             for mission in missions:
                 colleague.add_todo(mission, self)
     
@@ -67,9 +67,9 @@ class Worker(object):
             self.routine(ask_todo=False)
     
     # common job to do no matter yo are fast or slow
-    def _export_missions(self, receiver):
+    def _export_todo(self, receiver):
         """Tell receiver what to do next"""
-        raise NotImplementedError("Please Implement " + self.__class__.__name__ + "._export_missions()")
+        raise NotImplementedError("Please Implement " + self.__class__.__name__ + "._export_todo()")
 
     def _routine(self):
         """Pop and execute commands queued in self.mission_in"""

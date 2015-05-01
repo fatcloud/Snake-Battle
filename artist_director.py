@@ -7,7 +7,8 @@ class ArtistDirector(Worker):
         Worker.__init__(self)
 
     def _routine(self):
-        pass
+        self.mission_in.get_nowait()
         
-    def _export_mission(self, receiver):
+        
+    def _export_todo(self, receiver):
         pass

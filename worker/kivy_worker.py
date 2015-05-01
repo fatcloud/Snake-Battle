@@ -31,7 +31,7 @@ class KivyWorker(Widget, Worker):
         
         # OutputExecutor
         Clock.schedule_interval(self.__update_frame, 1.0/60.0)
-        
+        self.fast_list.append(self)
         self._mission_out = []
 
 
@@ -83,7 +83,7 @@ class KivyWorker(Widget, Worker):
     def _put_mission_out(self, mission):
         self._mission_out.append(mission)
     
-    def _export_missions(self, receiver):
+    def _export_todo(self, receiver):
         missions = self._mission_out[:]
         self._mission_out = []
         return missions
@@ -112,7 +112,7 @@ if __name__ == '__main__':
                 except Queue.Empty:
                     break
 
-        def _export_missions(self, caller):
+        def _export_todo(self, caller):
             if self._add_sqrt > 0:
                 mission = {'add_rect':self._add_sqrt}
                 self._add_sqrt -= 1

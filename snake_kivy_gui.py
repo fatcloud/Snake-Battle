@@ -36,7 +36,7 @@ class SnakeKivyGUI(KivyWorker):
             exec "self.canvas." + cmd
                 
     # translate keyboard command to model signal    
-    def _export_missions(self, receiver):
+    def _export_todo(self, receiver):
         sigs = self._signal_to_model[:]
         self._signal_to_model = []
         return sigs
