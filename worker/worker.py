@@ -3,8 +3,9 @@ import Queue
 
 
 def link_worker(source, destination, caller, event_driven_link=False):
-    
-    assert ((caller is source) or (caller is destination))
+    """The argument caller equals the caller of _export_todo()
+    also the one who keep the other in in_list or out_list"""
+    assert ((caller is source) != (caller is destination))
     
     if event_driven_link:
         destination.fast_list.append(source)
@@ -55,21 +56,34 @@ class Worker(object):
             for mission in missions:
                 colleague.add_todo(mission, self)
     
-    # Passively respond to co-workers
-    def add_todo(self, mission, assigner):
+    @staticmethod
+    def pass_mission(source, destination, mission, caller):
+        
+        assert ((caller is source) != (caller is destination))
+        
+        if caller is source:
+            callist = destination
+        elif caller is destination:
+            callist = source
+        
+        missions = source._export_todo(destination)
+    
+    
+    def add_todo(self, mission, source):
         """Assign jobs to self by slow up-stream co-workers"""
         if mission != {}:
             self.mission_in.put(mission)
         else:
             return
         
-        if assigner in self.fast_list:
+        if source in self.fast_list:
             self.routine(ask_todo=False)
     
     # common job to do no matter yo are fast or slow
-    def _export_todo(self, receiver):
-        """Tell receiver what to do next"""
-        raise NotImplementedError("Please Implement " + self.__class__.__name__ + "._export_todo()")
+    def _export_todo(self, destination):
+        """Tell destination what to do next his function is left unimplemented 
+        because missions are not necessarily exist before someone ask for it"""
+        raise NotImplementedError("Please Implement " + self.__class__.__name__ + ".routine()")
 
     def _routine(self):
         """Pop and execute commands queued in self.mission_in"""
