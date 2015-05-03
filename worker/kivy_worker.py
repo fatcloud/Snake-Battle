@@ -55,7 +55,8 @@ class KivyWorker(Widget, Worker):
                     'text':text,
                     'modifiers':modifiers}
         
-        self.add_todo(mission, self)
+        self.mission_in.put(mission)
+        self.routine(import_mission=False)
     
     def __update_frame(self, dt):
         self.routine()
@@ -83,7 +84,7 @@ class KivyWorker(Widget, Worker):
     def _put_mission_out(self, mission):
         self._mission_out.append(mission)
     
-    def _export_todo(self, receiver):
+    def _export_mission(self, receiver):
         missions = self._mission_out[:]
         self._mission_out = []
         return missions
@@ -103,8 +104,6 @@ if __name__ == '__main__':
 
         def _routine(self):
             missions = self.mission_in
-            mission = missions.get()
-            self._add_sqrt += mission['show square']
             while True:
                 try:
                     mission = missions.get_nowait()
@@ -112,7 +111,7 @@ if __name__ == '__main__':
                 except Queue.Empty:
                     break
 
-        def _export_todo(self, caller):
+        def _export_mission(self, caller):
             if self._add_sqrt > 0:
                 mission = {'add_rect':self._add_sqrt}
                 self._add_sqrt -= 1

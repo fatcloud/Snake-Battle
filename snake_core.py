@@ -17,7 +17,7 @@ class player(object):
 class SnakeCore(Worker):
     def __init__(self):
         Worker.__init__(self)
-        layout = { 'grid_size':10, 'width':80, 'height':40}
+        layout = {'grid_size':10, 'width':80, 'height':40}
         gd = layout['grid_size']
         w  = layout['width']
         h  = layout['height']
@@ -45,19 +45,7 @@ class SnakeCore(Worker):
             shift = ar(action_dict[cmd])
             player.position += shift
         
-    def _export_todo(self, receiver):
-        m = ['clear()']
-        
-        for i in [0, 1]:
-            # draw every snake
-            player = self._players[i]
-            grid_size = self._layout['grid_size']
-            pos = str((player.position * grid_size).tolist())
-            c = player.color
-            c = str((c.h, c.s, c.v))
-            m.append('add(Color' + c + ')')
-            m.append('add(Rectangle(pos='+ pos +', size=(10, 10)))')
-        
-        return [{'command_list':m}]
+    def _export_mission(self, receiver):
+        return [self]
 
         
