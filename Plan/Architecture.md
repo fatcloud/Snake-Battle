@@ -38,3 +38,5 @@ Python 這個程式語言與 C 家族的語言有所不同，
 2. 實作 _export_mission() 函數
 
 3. 用 link_worker 函數把所有的 Worker 連結成生產線
+
+用 link_worker 設定工作的傳遞時有些原則：動作慢的那方應該當 Caller，如果動作要同步就設 Event-driven=True。
